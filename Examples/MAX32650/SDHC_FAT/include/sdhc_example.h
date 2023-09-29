@@ -31,54 +31,35 @@
  *
  ******************************************************************************/
 
-/**
- * @file    main.c
- * @brief   read and write sdhc
- * @details This example uses the sdhc and ffat to read/write the file system on
- *          an SD card. The Fat library used supports long filenames (see ffconf.h)
- *          the max length is 256 characters.
- *
- *          You must connect an sd card to the sd card slot.
- */
+#ifndef EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_SDHC_EXAMPLE_H_
+#define EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_SDHC_EXAMPLE_H_
 
-/***** Includes *****/
-#include <stdio.h>
+int sdhc_init(void);
 
-#include "board.h"
-#include "cli.h"
-#include "mxc_errors.h"
-#include "sdhc_example.h"
-#include "uart.h"
-#include "user-cli.h"
+void generateMessage(unsigned length);
 
-/***** Definitions *****/
+int mount();
 
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
+int umount();
 
-/***** Functions *****/
-int main(void)
-{
-	int err;
+int formatSDHC();
 
-    printf("\n\n***** " TOSTRING(TARGET) " SDHC FAT Filesystem Example *****\n");
+int getSize();
 
-    if (sdhc_init() != E_NO_ERROR) {
-    	printf("Unable to initialize the SDHC card.\n");
-    	return E_BAD_STATE;
-    }
+int ls();
 
-    printf("SDHC Ready!\n");
-    while (MXC_UART_GetActive(MXC_UART_GET_UART(CONSOLE_UART))) {}
+int createFile(char *file_name, unsigned int length);
 
-    // Initialize CLI
-    if ((err = MXC_CLI_Init(MXC_UART_GET_UART(CONSOLE_UART), user_commands, num_user_commands)) !=
-        E_NO_ERROR) {
-        return err;
-    }
+int appendFile(char *file_name, unsigned int length);
 
-    // Run CLI
-    while (1) {}
+int mkdir(char *dir_name);
 
-    return 0;
-}
+int cd(char *dir_name);
+
+int deleteFile(char *file_name);
+
+int example();
+
+void waitCardInserted();
+
+#endif // EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_SDHC_EXAMPLE_H_

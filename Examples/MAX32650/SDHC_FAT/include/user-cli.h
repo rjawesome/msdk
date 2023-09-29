@@ -31,54 +31,38 @@
  *
  ******************************************************************************/
 
-/**
- * @file    main.c
- * @brief   read and write sdhc
- * @details This example uses the sdhc and ffat to read/write the file system on
- *          an SD card. The Fat library used supports long filenames (see ffconf.h)
- *          the max length is 256 characters.
- *
- *          You must connect an sd card to the sd card slot.
- */
+#ifndef EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_USER_CLI_H_
+#define EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_USER_CLI_H_
 
-/***** Includes *****/
-#include <stdio.h>
+/* -------------------------------------------------- */
+//                GLOBAL VARIABLE
+/* -------------------------------------------------- */
+extern const command_t user_commands[];
+extern const unsigned int num_user_commands;
 
-#include "board.h"
-#include "cli.h"
-#include "mxc_errors.h"
-#include "sdhc_example.h"
-#include "uart.h"
-#include "user-cli.h"
+/* -------------------------------------------------- */
+//             FUNCTION PROTOTYPES
+/* -------------------------------------------------- */
+int handle_size(int argc, char *argv[]);
 
-/***** Definitions *****/
+int handle_format(int argc, char *argv[]);
 
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
+int handle_mount(int argc, char *argv[]);
 
-/***** Functions *****/
-int main(void)
-{
-	int err;
+int handle_ls(int argc, char *argv[]);
 
-    printf("\n\n***** " TOSTRING(TARGET) " SDHC FAT Filesystem Example *****\n");
+int handle_mkdir(int argc, char *argv[]);
 
-    if (sdhc_init() != E_NO_ERROR) {
-    	printf("Unable to initialize the SDHC card.\n");
-    	return E_BAD_STATE;
-    }
+int handle_createfile(int argc, char *argv[]);
 
-    printf("SDHC Ready!\n");
-    while (MXC_UART_GetActive(MXC_UART_GET_UART(CONSOLE_UART))) {}
+int handle_cd(int argc, char *argv[]);
 
-    // Initialize CLI
-    if ((err = MXC_CLI_Init(MXC_UART_GET_UART(CONSOLE_UART), user_commands, num_user_commands)) !=
-        E_NO_ERROR) {
-        return err;
-    }
+int handle_add_data(int argc, char *argv[]);
 
-    // Run CLI
-    while (1) {}
+int handle_del(int argc, char *argv[]);
 
-    return 0;
-}
+int handle_fatfs(int argc, char *argv[]);
+
+int handle_unmount(int argc, char *argv[]);
+
+#endif // EXAMPLES_MAX32650_SDHC_FAT_INCLUDE_USER_CLI_H_
