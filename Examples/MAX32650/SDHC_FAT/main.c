@@ -46,6 +46,7 @@
 
 #include "board.h"
 #include "cli.h"
+#include "icc.h"
 #include "mxc_errors.h"
 #include "sdhc_example.h"
 #include "uart.h"
@@ -62,6 +63,8 @@ int main(void)
 	int err;
 
     printf("\n\n***** " TOSTRING(TARGET) " SDHC FAT Filesystem Example *****\n");
+
+    MXC_ICC_Disable();
 
     if (sdhc_init() != E_NO_ERROR) {
     	printf("Unable to initialize the SDHC card.\n");
