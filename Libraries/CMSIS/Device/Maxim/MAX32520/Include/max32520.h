@@ -206,10 +206,14 @@ typedef enum {
 
 /* ----------------------  Configuration of the Cortex-M Processor and Core Peripherals  ---------------------- */
 #define __CM4_REV 0x0100 /*!< Cortex-M4 Core Revision                                */
+#ifndef __MPU_PRESENT
 #define __MPU_PRESENT 1 /*!< MPU present or not                                     */
+#endif
 #define __NVIC_PRIO_BITS 3 /*!< Number of Bits used for Priority Levels                */
 #define __Vendor_SysTickConfig 0 /*!< Set to 1 if different SysTick Config is used           */
+#ifndef __FPU_PRESENT
 #define __FPU_PRESENT 1 /*!< FPU present or not                                     */
+#endif
 
 #include <core_cm4.h> /*!< Cortex-M4 processor and core peripherals               */
 #include "system_max32520.h" /*!< System Header                                          */
