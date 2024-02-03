@@ -36,16 +36,16 @@ caddr_t _sbrk(int incr)
     char *prev_heap_end;
 
     if (heap_end == 0) {
-        heap_end = (caddr_t)&__HeapBase;
+        heap_end = (char*)&__HeapBase;
     }
     prev_heap_end = heap_end;
 
     if ((unsigned int)(heap_end + incr) > (unsigned int)&__HeapLimit) {
         errno = ENOMEM;
-        return (caddr_t)-1;
+        return (char*)-1;
     }
 
     heap_end += incr;
 
-    return (caddr_t)prev_heap_end;
+    return (char*)prev_heap_end;
 }
