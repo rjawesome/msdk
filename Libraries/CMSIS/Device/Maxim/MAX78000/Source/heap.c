@@ -31,7 +31,7 @@
 static char *heap_end = 0;
 extern unsigned int __HeapBase;
 extern unsigned int __HeapLimit;
-caddr_t _sbrk(int incr)
+char* _sbrk(int incr)
 {
     char *prev_heap_end;
 
